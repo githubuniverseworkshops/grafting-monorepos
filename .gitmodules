@@ -1,3 +1,0 @@
-[submodule "scripts/git-sizer"]
-	path = scripts/git-sizer
-	url = https://github.com/github/git-sizer
