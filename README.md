@@ -92,12 +92,12 @@ git log --oneline [filename] | wc -l
 ### Report out
 
 Report your findings in comments section of the “Activity 1 - History” Issue
-  - Be sure to obfuscate or remove any sensitive data/information before posting
   - Include answers to the following questions in your comments:
     - How often was that file changed?
     - Do you find any pattern?
     - Are the commit messages relevant enough to know why the file changed? Do you follow a standard?
 
+> :warning: Make sure during all this exercise you don't post any private information that should not be shared publicly.
 
 ## :bar_chart: Activity 2: Analysis (20 minutes)
 
