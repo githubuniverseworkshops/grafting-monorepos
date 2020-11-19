@@ -1,8 +1,97 @@
 # Universe workshop: Grafting monorepos
 Keep monorepos manageable using grafting
 
+## Pre-requisites
 
-## Exercise 2
+Before joining the workshop, there are a few items that you will need to install or bring with you.
+
+- A clone or fork of a repository you would like to reduce in size
+- Time it takes to clone the repository  
+    `time git clone [url]`
+- Install [git-sizer](https://github.com/github/git-sizer/#getting-started)
+
+
+## Activity 1: History (10 minutes)
+
+We will take a look at some of the characteristics of your own repository in preparation of the analyzation phase.
+
+### History of a single file
+
+Let's look at the history of a single file within your repository.  Pick a file that has been around for a while. Using a command line tool, run the following command on it:  
+```
+git log --oneline --graph -- [filename]
+```
+
+*Be sure you are in the location of that file inside your command line tool.*
+
+<details><summary>Sample results</summary>
+```bash
+  * a7ddcea58ae2 Drop all 00-INDEX files from Documentation/
+  * 4b290af0b3a4 Docs: Added a pointer to the formatted docs to README
+  * 9f4a68e416a5 README: Improve documentation descriptions
+  * 6bef44b9b969 README: add a new README file, pointing to the Documentation/
+  * 9d85025b0418 docs-rst: create an users manual book
+  * 44b10006a97e README: convert it to ReST markup
+  * 35db7e94cdee README: Delete obsolete i386 info + update arch/i386/ paths
+  * cfaf790f932b README: remove trailing whitespace
+  * 3047bcc537cf README: cosmetic fixes
+  * ad29fff88976 README: Add ARC architecture
+  * 6609b638353c README: GTK+ is a acronym
+  * 1913c6f4488e README: Change gzip/bzip2 to xz compression format
+  * 49d86dc92c6e README: Update version number reference
+  *   3bd7bf1f0fe1 Merge branch 'master' into for-next
+  |\  
+  | * 80b810b276cf localmodconfig: Document localmodconfig in README
+  * | fc0d1b93fe7b README: document "make olddefconfig"
+  |/  
+  * 3773b4540721 README: Remove sporadic tabs
+  * 7f65e924c0cf README: Consolidate discussions of -stable patches
+  * c072c3f0e14f README: Capitalize start of sentence
+  * 88f7a642cf0d README: More consistent and readable white space
+  * 6d12760c9f3d README: `Alternately` -> `Alternatively`
+  * a6144bb9e7b4 README: Better comma usage
+  * a20e3a795b1a README: Grammar: `me has' -> `I have'
+  * 5b4285fbd469 README: Use `X' and `x' consistently
+  * 0466dcbeda72 Update version number references in README
+  * cddb5de05317 Readme: Add architecture
+  * b3235fe420ed README: cite nconfig
+  * b2d8993026a2 README: fix misleading pointer to the defconf directory
+  * 590a5857291e kconfig: add a note about the deps to the 'silentoldconfig' help
+```
+
+</details>
+  <br>  
+
+### How many times has the file changed?
+
+Let's find out how many times that file has changed.  On the same file, run the following command to see how may commits have been made for that single file:  
+```
+git log --oneline [filename] | wc -l
+```
+
+
+<details><summary>Sample results</summary>
+
+  ```
+  ❯ git log --oneline README | wc -l
+    46
+  ```
+
+</details>
+<br>
+
+
+### Report out
+
+Report your findings in comments section of the “Activity 1 - History” Issue
+  - Be sure to obfuscate or remove any sensitive data/information before posting
+  - Include answers to the following questions in your comments:
+    - How often was that file changed?
+    - Do you find any pattern?
+    - Are the commit messages relevant enough to know why the file changed? Do you follow a standard?
+
+
+## Activity 2: Analysis (20 minutes)
 
 We will use different analysis tools to identify wrong practices in a repository. To do it we will use the following commands:
 - **git-sizer**
@@ -34,7 +123,7 @@ gh repo clone githubuniverseworkshops/grafting-monorepos
 /path/to/git-sizer --verbose
 ```
 
-<details><summary>See the result of running `git-sizer`</summary>
+<details><summary>See the result of running <code>git-sizer</code></summary>
 
 ``` bash
 ../git-sizer-1.3.0-darwin-amd64/git-sizer --verbose
@@ -107,7 +196,7 @@ Processing references: 676
 ../grafting-monorepos/scripts/git-find-lfs-extensions
 ```
 
-<details><summary>See the results of running `git-find-lfs-extensions`</summary>
+<details><summary>See the results of running <code>git-find-lfs-extensions</code></summary>
 
 ```bash
 time ../grafting-monorepos/scripts/git-find-lfs-extensions
@@ -135,7 +224,7 @@ Add to .gitattributes:
 ../grafting-monorepos/scripts/git-find-dirs-many-files
 ```
 
-<details><summary>See the results of running `git-find-dirs-many-files`</summary>
+<details><summary>See the results of running <code>git-find-dirs-many-files</code></summary>
 
 ```bash
 time ../grafting-monorepos/scripts/git-find-dirs-many-files | head -n 20
@@ -173,7 +262,7 @@ head -n 20  0.00s user 0.00s system 0% cpu 42.630 total
 ../grafting-monorepos/scripts/git-find-dirs-unwanted | head -n 15            
 ```
 
-<details><summary>See the results of running `git-find-dirs-unwanted`</summary>
+<details><summary>See the results of running <code>git-find-dirs-unwanted</code></summary>
 
 ```bash
 time ../grafting-monorepos/scripts/git-find-dirs-unwanted | head -n 15
@@ -206,7 +295,7 @@ head -n 15  0.00s user 0.00s system 0% cpu 1:22.31 total
 ../git-filter-repo/git-filter-repo --analyze
 ```
 
-<details><summary>See the results of running `git filter-repo --analyze`</summary>
+<details><summary>See the results of running <code>git filter-repo --analyze</code></summary>
 
 ```bash
 time ../git-filter-repo/git-filter-repo --analyze
@@ -222,7 +311,7 @@ Writing reports to .git/filter-repo/analysis...done.
 
 You can see the results of the analysis in the [`linux-filter-repo` folder](./linux-filter-repo)
 
-## Exercise 3
+## Activity 3: Graft a repository (20 minutes)
 
 ### Analysis after grafting
 
