@@ -115,7 +115,7 @@ Before starting any analysis, **pick one repository of your preference** that yo
 Clone this repository as we have added all the tools into the it for making the workshop more convenient:
 ```bash
 # Clone the repository
-git clone git@github.com:githubuniverseworkshops/grafting-monorepos.git
+git clone https://github.com/githubuniverseworkshops/grafting-monorepos.git
 
 
 #  or use the GitHub CLI
