@@ -1,7 +1,15 @@
-# Universe workshop: Grafting monorepos
-Keep monorepos manageable using grafting
+<h1 align="center">Grafting monorepos</h1>
+<h4 align="center">Keep monorepos manageable using grafting</h4>
+<h5 align="center">@droidpl & @selkins13</h5>
 
-## Pre-requisites
+<p align="center">
+  <a href="#mega-prerequisites">Prerequisites</a> •  
+  <a href="#books-resources">Resources</a>
+</p>
+
+---
+
+## :mega: Prerequisites
 
 Before joining the workshop, there are a few items that you will need to install or bring with you.
 
@@ -11,7 +19,7 @@ Before joining the workshop, there are a few items that you will need to install
 - Install [git-sizer](https://github.com/github/git-sizer/#getting-started)
 
 
-## Activity 1: History (10 minutes)
+## :scroll: Activity 1: History (10 minutes)
 
 We will take a look at some of the characteristics of your own repository in preparation of the analyzation phase.
 
@@ -91,7 +99,7 @@ Report your findings in comments section of the “Activity 1 - History” Issue
     - Are the commit messages relevant enough to know why the file changed? Do you follow a standard?
 
 
-## Activity 2: Analysis (20 minutes)
+## :bar_chart: Activity 2: Analysis (20 minutes)
 
 We will use different analysis tools to identify wrong practices in a repository. To do it we will use the following commands:
 - **git-sizer**
@@ -311,7 +319,7 @@ Writing reports to .git/filter-repo/analysis...done.
 
 You can see the results of the analysis in the [`linux-filter-repo` folder](./linux-filter-repo)
 
-## Activity 3: Graft a repository (20 minutes)
+## :seedling: Activity 3: Graft a repository (20 minutes)
 
 ### Analysis after grafting
 
@@ -462,3 +470,9 @@ Writing reports to .git/filter-repo/analysis...done.
 </details>
 
 Find the details in the [`linux-filter-repo-grafted` folder](./linux-filter-repo-grafted)
+
+## :books: Resources
+
+- Linux Kernel open source repository - [https://github.com/torvalds/linux](https://github.com/torvalds/linux)
+- Git Sizer - [https://github.com/github/git-sizer/#getting-started](https://github.com/github/git-sizer/#getting-started)
+- Git SCM reference manual - [https://git-scm.com/docs](https://git-scm.com/docs)
