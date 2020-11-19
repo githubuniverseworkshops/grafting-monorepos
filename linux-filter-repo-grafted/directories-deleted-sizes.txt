@@ -1,0 +1,2 @@
+=== Deleted directories by reverse size ===
+Format: unpacked size, packed size, date deleted, directory name

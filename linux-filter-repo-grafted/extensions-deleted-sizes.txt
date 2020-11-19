@@ -1,0 +1,2 @@
+=== Deleted extensions by reverse size ===
+Format: unpacked size, packed size, date deleted, extension name

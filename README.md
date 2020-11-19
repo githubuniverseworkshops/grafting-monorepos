@@ -37,7 +37,8 @@ gh repo clone githubuniverseworkshops/grafting-monorepos
 <details><summary>See the result of running `git-sizer`</summary>
 
 ``` bash
-» ../git-sizer-1.3.0-darwin-amd64/git-sizer --verbose
+../git-sizer-1.3.0-darwin-amd64/git-sizer --verbose
+
 Processing blobs: 2173019                        
 Processing trees: 4613547                        
 Processing commits: 967035                        
@@ -137,7 +138,8 @@ Add to .gitattributes:
 <details><summary>See the results of running `git-find-dirs-many-files`</summary>
 
 ```bash
-time ../grafting-monorepos/scripts/git-find-dirs-many-files | head -n 20                                                                    droidpl@javiers-mbp
+time ../grafting-monorepos/scripts/git-find-dirs-many-files | head -n 20
+
    70602 .
    28698 ./drivers
    15946 ./arch
@@ -174,7 +176,8 @@ head -n 20  0.00s user 0.00s system 0% cpu 42.630 total
 <details><summary>See the results of running `git-find-dirs-unwanted`</summary>
 
 ```bash
-» time ../grafting-monorepos/scripts/git-find-dirs-unwanted | head -n 15                                                                      droidpl@javiers-mbp
+time ../grafting-monorepos/scripts/git-find-dirs-unwanted | head -n 15
+
     4569 tools/
     4064 Documentation/devicetree/bindings/
     2088 tools/testing/selftests/
@@ -206,6 +209,8 @@ head -n 15  0.00s user 0.00s system 0% cpu 1:22.31 total
 <details><summary>See the results of running `git filter-repo --analyze`</summary>
 
 ```bash
+time ../git-filter-repo/git-filter-repo --analyze
+
 Processed 7754272 blob sizes
 Processed 967008 commitswarning: inexact rename detection was skipped due to too many files.
 warning: you may want to set your diff.renameLimit variable to at least 817 and retry the command.
@@ -214,3 +219,157 @@ Writing reports to .git/filter-repo/analysis...done.
 ../git-filter-repo/git-filter-repo --analyze  1104.40s user 45.86s system 105% cpu 18:11.40 total
 ```
 </details>
+
+You can see the results of the analysis in the [`linux-filter-repo` folder](./linux-filter-repo)
+
+## Exercise 3
+
+### Analysis after grafting
+
+**Git sizer**:
+<details><summary>Git sizer analysis on linux:</summary>
+
+```bash
+time ../git-sizer-1.3.0-darwin-amd64/git-sizer --verbose
+
+Processing blobs: 68974                        
+Processing trees: 4703                        
+Processing commits: 2                        
+Matching commits to trees: 2                        
+Processing annotated tags: 0                        
+Processing references: 3                        
+| Name                         | Value     | Level of concern               |
+| ---------------------------- | --------- | ------------------------------ |
+| Overall repository size      |           |                                |
+| * Commits                    |           |                                |
+|   * Count                    |     2     |                                |
+|   * Total size               |  2.18 KiB |                                |
+| * Trees                      |           |                                |
+|   * Count                    |  4.70 k   |                                |
+|   * Total size               |  2.81 MiB |                                |
+|   * Total tree entries       |  74.0 k   |                                |
+| * Blobs                      |           |                                |
+|   * Count                    |  69.0 k   |                                |
+|   * Total size               |   908 MiB |                                |
+| * Annotated tags             |           |                                |
+|   * Count                    |     0     |                                |
+| * References                 |           |                                |
+|   * Count                    |     3     |                                |
+|                              |           |                                |
+| Biggest objects              |           |                                |
+| * Commits                    |           |                                |
+|   * Maximum size         [1] |  1.10 KiB |                                |
+|   * Maximum parents      [1] |     1     |                                |
+| * Trees                      |           |                                |
+|   * Maximum entries      [2] |  2.19 k   | **                             |
+| * Blobs                      |           |                                |
+|   * Maximum size         [3] |  13.5 MiB | *                              |
+|                              |           |                                |
+| History structure            |           |                                |
+| * Maximum history depth      |     2     |                                |
+| * Maximum tag depth          |     0     |                                |
+|                              |           |                                |
+| Biggest checkouts            |           |                                |
+| * Number of directories  [4] |  4.71 k   | **                             |
+| * Maximum path depth     [4] |    10     | *                              |
+| * Maximum path length    [4] |   100 B   | *                              |
+| * Number of files        [4] |  69.3 k   | *                              |
+| * Total size of files    [4] |   909 MiB |                                |
+| * Number of symlinks     [4] |    31     |                                |
+| * Number of submodules       |     0     |                                |
+
+[1]  3fd90e0a58ed50bb7bdb0add2d6e05fb7fc4cac7 (refs/heads/master)
+[2]  648d5c2e00672dfe3c217d25b8c73802744f3d3b (refs/heads/master:arch/arm/boot/dts)
+[3]  29af5167cd0057fcfbfab150378322008d3d2667 (refs/heads/master:drivers/gpu/drm/amd/include/asic_reg/nbio/nbio_6_1_sh_mask.h)
+[4]  4367680f5832eb1c626ea6f6ca5d283f66c686bd (refs/heads/master^{tree})
+../git-sizer-1.3.0-darwin-amd64/git-sizer --verbose  0.48s user 0.13s system 176% cpu 0.346 total
+```
+</details>
+
+**Git find LFS extensions**:
+<details><summary>Find lfs extensions on linux:</summary>
+
+```bash
+» time ../grafting-monorepos/scripts/git-find-lfs-extensions                                 droidpl@Javiers-MacBook-Pro
+
+Type           Extension                                          LShare    LCount     Count      Size       Min       Max
+-------        ---------                                         -------   -------   -------   -------   -------   -------
+all            *                                                     0 %        72     69269       908         0        13
+text           h                                                     0 %        62     21369       304         0        13
+text           c                                                     0 %         7     29460       523         0         0
+text           json                                                  1 %         2       332         7         0         0
+text w/o ext   maintainers                                          50 %         1         2         0         0         0
+
+Add to .gitattributes:
+
+../grafting-monorepos/scripts/git-find-lfs-extensions  2.68s user 4.58s system 99% cpu 7.293 total
+```
+</details>
+
+**Find many dirs**:
+<details><summary>Find many dirs analysis on linux:</summary>
+
+```bash
+» time ../grafting-monorepos/scripts/git-find-dirs-many-files | head -n 20                   droidpl@Javiers-MacBook-Pro
+   69309 .
+   28688 ./drivers
+   14720 ./arch
+    7485 ./Documentation
+    5416 ./include
+    5085 ./drivers/gpu
+    4996 ./drivers/gpu/drm
+    4921 ./drivers/net
+    4518 ./tools
+    4232 ./arch/arm
+    4070 ./Documentation/devicetree
+    4063 ./Documentation/devicetree/bindings
+    2453 ./include/linux
+    2438 ./drivers/media
+    2366 ./drivers/net/ethernet
+    2279 ./sound
+    2204 ./drivers/staging
+    2201 ./arch/arm/boot
+    2184 ./arch/arm/boot/dts
+    2167 ./tools/testing
+../grafting-monorepos/scripts/git-find-dirs-many-files  11.45s user 43.86s system 134% cpu 41.070 total
+head -n 20  0.00s user 0.00s system 0% cpu 41.058 total
+```
+</details>
+
+**Find dirs unwanted**:
+<details><summary>Find dirs unwanted analysis on linux:</summary>
+
+```bash
+../grafting-monorepos/scripts/git-find-dirs-unwanted | head -n 15                          droidpl@Javiers-MacBook-Pro
+    4518 tools/
+    4063 Documentation/devicetree/bindings/
+    2059 tools/testing/selftests/
+    1255 tools/perf/
+    1239 arch/x86/
+     630 tools/testing/selftests/bpf/
+     448 lib/
+     368 arch/x86/include/asm/
+     327 tools/perf/util/
+     326 Documentation/devicetree/bindings/sound/
+     325 tools/testing/selftests/bpf/progs/
+     313 tools/perf/pmu-events/
+     283 include/dt-bindings/clock/
+     269 Documentation/devicetree/bindings/clock/
+     230 tools/lib/
+```
+</details>
+
+**Git filter repo analyze**:
+<details><summary>Git filter repo analysis on linux:</summary>
+
+```bash
+time ../git-filter-repo/git-filter-repo --analyze
+
+Processed 73679 blob sizes
+Processed 2 commits
+Writing reports to .git/filter-repo/analysis...done.
+../git-filter-repo/git-filter-repo --analyze  5.74s user 2.23s system 101% cpu 7.865 total
+```
+</details>
+
+Find the details in the [`linux-filter-repo-grafted` folder](./linux-filter-repo-grafted)

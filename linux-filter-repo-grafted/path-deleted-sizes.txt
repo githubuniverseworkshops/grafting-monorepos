@@ -1,0 +1,2 @@
+=== Deleted paths by reverse accumulated size ===
+Format: unpacked size, packed size, date deleted, path name(s)
