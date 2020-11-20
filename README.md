@@ -321,6 +321,75 @@ You can see the results of the analysis in the [`linux-filter-repo` folder](./li
 
 ## :seedling: Activity 3: Graft a repository (20 minutes)
 
+### Grafting commands
+1. Clean your repository
+  - LFS
+  - Unneeded or unwanted files
+  - Add dependencies to dependency management
+  - Remove independent components
+  - Remove any binaries
+  - Review automation in the repository
+2. [Create a new repository](https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/creating-a-new-repository)
+3. Prepare for grafting
+  - Communicate properly to the affected teams
+  - Merge all in progress work
+  - If something is not merged, will not be moved
+  - Call [GitHub Professional Services](https://services.github.com/) if things go south
+4. Delete your history
+```
+# Delete the git folder that contains git objects
+rm -rf .git
+
+# Initialize a new history
+git init
+
+# Set the new repository
+git remote add origin git@github.com:githubuniverseworkshops/grafting-repo.git
+```
+5. Write a commit referencing to the previous repository as your firs commit in the new repository
+```
+# Add all files to the stage
+git add --all
+
+# Add changes to history 
+git commit -m "Previous repo can be found on https://github.com/torvalds/linux"
+
+# Submit your changes to upstream
+git push --set-upstream origin main
+```
+
+### Working with the new repository
+To preserve the history while working with the new repository, follow the grafting command:
+```
+# Fetch the old history
+git fetch git@github.com:torvalds/linux.git 
+
+# See you only have one commit in it
+git log --oneline
+
+# See the commits we are replacing
+git rev-parse --short HEAD 
+git rev-parse --short FETCH_HEAD
+
+# Perform the grafting operation replacing HEAD with FETCH_HEAD
+git replace HEAD FETCH_HEAD
+```
+
+Check that all the changes that have happened to the repository are local and don't get pushed when new code goes to the repository:
+```
+# Check that the new commit goes to the right repo
+# Modify a file
+echo "Test" > test.txt
+git add --all
+git commit -m "Adding a test commit"
+
+# Check that you can navigate the history
+git log --oneline | head -n 10
+
+# Push the change and see the number of commits is still 2
+git push
+```
+
 ### Analysis after grafting
 
 **Git sizer**:
