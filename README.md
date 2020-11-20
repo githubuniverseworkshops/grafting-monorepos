@@ -322,20 +322,20 @@ You can see the results of the analysis in the [`linux-filter-repo` folder](./li
 ## :seedling: Activity 3: Graft a repository (20 minutes)
 
 ### Grafting commands
-1. Clean your repository
+- **Step 1**: Clean your repository
   - LFS
   - Unneeded or unwanted files
   - Add dependencies to dependency management
   - Remove independent components
   - Remove any binaries
   - Review automation in the repository
-2. [Create a new repository](https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/creating-a-new-repository)
-3. Prepare for grafting
+- **Step 2**: [Create a new repository](https://docs.github.com/en/github/creating-cloning-and-archiving-repositories/creating-a-new-repository)
+- **Step 3**: Prepare for grafting
   - Communicate properly to the affected teams
   - Merge all in progress work
   - If something is not merged, will not be moved
   - Call [GitHub Professional Services](https://services.github.com/) if things go south
-4. Delete your history
+- **Step 4**: Delete your history
 ```
 # Delete the git folder that contains git objects
 rm -rf .git
@@ -346,7 +346,7 @@ git init
 # Set the new repository
 git remote add origin git@github.com:githubuniverseworkshops/grafting-repo.git
 ```
-5. Write a commit referencing to the previous repository as your firs commit in the new repository
+- **Step 5**: Write a commit referencing to the previous repository as your firs commit in the new repository
 ```
 # Add all files to the stage
 git add --all
