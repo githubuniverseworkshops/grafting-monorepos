@@ -127,7 +127,8 @@ gh repo clone githubuniverseworkshops/grafting-monorepos
 ### Stats of repo size: [`git-sizer`](https://github.com/github/git-sizer)
 
 1. [Download](https://github.com/github/git-sizer/releases/latest) the corresponding compiled version of `git-sizer`.
-> Optionally you can install git-sizer using Homebrew if you are on Mac
+> Optionally you can install git-sizer using Homebrew if you are on Mac.
+
 2. Run the tool from the root of the repository to analyze:
 ```bash
 /path/to/git-sizer --verbose
@@ -203,7 +204,7 @@ Processing references: 676
 1. Checkout the `grafting-monorepos` repository
 2. Run the tool from the root of the repository to analyze:
 ```bash
-../grafting-monorepos/scripts/git-find-lfs-extensions
+/path/to/grafting-monorepos/scripts/git-find-lfs-extensions
 ```
 
 <details><summary>See the results of running <code>git-find-lfs-extensions</code></summary>
@@ -231,7 +232,7 @@ Add to .gitattributes:
 1. Checkout the `grafting-monorepos` repository
 2. Run the tool from the root of the repository to analyze:
 ```bash
-../grafting-monorepos/scripts/git-find-dirs-many-files
+/path/to/grafting-monorepos/scripts/git-find-dirs-many-files
 ```
 
 <details><summary>See the results of running <code>git-find-dirs-many-files</code></summary>
@@ -269,7 +270,7 @@ head -n 20  0.00s user 0.00s system 0% cpu 42.630 total
 1. Checkout the `grafting-monorepos` repository
 2. Run the tool from the root of the repository to analyze:
 ```bash
-../grafting-monorepos/scripts/git-find-dirs-unwanted | head -n 15            
+/path/to/grafting-monorepos/scripts/git-find-dirs-unwanted | head -n 15            
 ```
 
 <details><summary>See the results of running <code>git-find-dirs-unwanted</code></summary>
@@ -292,7 +293,7 @@ time ../grafting-monorepos/scripts/git-find-dirs-unwanted | head -n 15
      283 include/dt-bindings/clock/
      269 Documentation/devicetree/bindings/clock/
      240 arch/x86/kernel/
-../grafting-monorepos/scripts/git-find-dirs-unwanted  81.27s user 13.35s system 114% cpu 1:22.32 total
+/path/to/grafting-monorepos/scripts/git-find-dirs-unwanted  81.27s user 13.35s system 114% cpu 1:22.32 total
 head -n 15  0.00s user 0.00s system 0% cpu 1:22.31 total
 ```
 </details>
@@ -302,7 +303,7 @@ head -n 15  0.00s user 0.00s system 0% cpu 1:22.31 total
 1. Clone the [`git-filter-repo` tool](https://github.com/newren/git-filter-repo)
 2. Execute the tool from the linux repository
 ```bash
-../git-filter-repo/git-filter-repo --analyze
+/path/to/git-filter-repo/git-filter-repo --analyze
 ```
 
 <details><summary>See the results of running <code>git filter-repo --analyze</code></summary>
@@ -335,10 +336,10 @@ You can see the results of the analysis in the [`linux-filter-repo` folder](./li
 - **Step 3**: Prepare for grafting
   - Communicate properly to the affected teams
   - Merge all in progress work
-  - If something is not merged, will not be moved
+  - If something is not merged, it will not be moved
   - Call [GitHub Professional Services](https://services.github.com/) if things go south
 - **Step 4**: Delete your history
-```
+```bash
 # Delete the git folder that contains git objects
 rm -rf .git
 
@@ -348,8 +349,8 @@ git init
 # Set the new repository
 git remote add origin git@github.com:githubuniverseworkshops/grafting-repo.git
 ```
-- **Step 5**: Write a commit referencing to the previous repository as your firs commit in the new repository
-```
+- **Step 5**: Write a commit referencing to the previous repository as your first commit in the new repository
+```bash
 # Add all files to the stage
 git add --all
 
@@ -362,7 +363,7 @@ git push --set-upstream origin main
 
 ### Working with the new repository
 To preserve the history while working with the new repository, follow the grafting command:
-```
+```bash
 # Fetch the old history
 git fetch git@github.com:torvalds/linux.git
 
@@ -378,7 +379,7 @@ git replace HEAD FETCH_HEAD
 ```
 
 Check that all the changes that have happened to the repository are local and don't get pushed when new code goes to the repository:
-```
+```bash
 # Check that the new commit goes to the right repo
 # Modify a file
 echo "Test" > test.txt
