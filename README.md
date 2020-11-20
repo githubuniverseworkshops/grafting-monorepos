@@ -1,3 +1,4 @@
+<p align="center"><img height="110px" src="https://ghicons.github.com/assets/images/blue/png/Private%20repos.png"/></p>
 <h1 align="center">Grafting monorepos</h1>
 <h4 align="center">Keep monorepos manageable using grafting</h4>
 <h5 align="center">@droidpl & @selkins13</h5>
