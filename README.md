@@ -16,11 +16,9 @@ Before joining the workshop, there are a few items that you will need to install
 - A clone or fork of a repository you would like to reduce in size
 - Time it takes to clone the repository  
     `time git clone [url]`
-    
-For the analysis you will need:
 - Install [git-sizer](https://github.com/github/git-sizer/#getting-started)
 - Install [git-filter-repo](https://github.com/newren/git-filter-repo)
-- Clone the current repository
+- Clone the this [workshop repository](https://github.com/githubuniverseworkshops/grafting-monorepos)
 
 
 ## :scroll: Activity 1: History (10 minutes)
@@ -77,14 +75,14 @@ git log --oneline --graph -- [filename]
 ### How many times has the file changed?
 
 Let's find out how many times that file has changed.  On the same file, run the following command to see how may commits have been made for that single file:  
-```
+```bash
 git log --oneline [filename] | wc -l
 ```
 
 
 <details><summary>Sample results</summary>
 
-  ```
+  ```bash
   ❯ git log --oneline README | wc -l
     46
   ```
@@ -112,7 +110,7 @@ We will use different analysis tools to identify wrong practices in a repository
 - **git-find-dirs-unwanted**
 - **git-filter-repo**
 
-Before starting any analysis, **pick one repository of your preference** that you would like to analyze
+Before starting any analysis, **pick one repository of your preference** that you would like to analyze.
 
 > :warning: Make sure during all this exercise you don't post any private information that should not be shared publicly.
 
@@ -355,7 +353,7 @@ git remote add origin git@github.com:githubuniverseworkshops/grafting-repo.git
 # Add all files to the stage
 git add --all
 
-# Add changes to history 
+# Add changes to history
 git commit -m "Previous repo can be found on https://github.com/torvalds/linux"
 
 # Submit your changes to upstream
@@ -366,13 +364,13 @@ git push --set-upstream origin main
 To preserve the history while working with the new repository, follow the grafting command:
 ```
 # Fetch the old history
-git fetch git@github.com:torvalds/linux.git 
+git fetch git@github.com:torvalds/linux.git
 
 # See you only have one commit in it
 git log --oneline
 
 # See the commits we are replacing
-git rev-parse --short HEAD 
+git rev-parse --short HEAD
 git rev-parse --short FETCH_HEAD
 
 # Perform the grafting operation replacing HEAD with FETCH_HEAD
