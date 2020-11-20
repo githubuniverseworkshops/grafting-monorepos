@@ -16,7 +16,11 @@ Before joining the workshop, there are a few items that you will need to install
 - A clone or fork of a repository you would like to reduce in size
 - Time it takes to clone the repository  
     `time git clone [url]`
+    
+For the analysis you will need:
 - Install [git-sizer](https://github.com/github/git-sizer/#getting-started)
+- Install [git-filter-repo](https://github.com/newren/git-filter-repo)
+- Clone the current repository
 
 
 ## :scroll: Activity 1: History (10 minutes)
