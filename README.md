@@ -543,5 +543,7 @@ Find the details in the [`linux-filter-repo-grafted` folder](./linux-filter-repo
 ## :books: Resources
 
 - Linux Kernel open source repository - [https://github.com/torvalds/linux](https://github.com/torvalds/linux)
-- Git Sizer - [https://github.com/github/git-sizer/#getting-started](https://github.com/github/git-sizer/#getting-started)
 - Git SCM reference manual - [https://git-scm.com/docs](https://git-scm.com/docs)
+- Git Sizer - [https://github.com/github/git-sizer/#getting-started](https://github.com/github/git-sizer/#getting-started)
+- Platform samples scripts - [https://github.com/github/platform-samples/tree/master/scripts](https://github.com/github/platform-samples/tree/master/scripts)
+- Git filter repo analysis tool - [https://github.com/newren/git-filter-repo](https://github.com/newren/git-filter-repo)
