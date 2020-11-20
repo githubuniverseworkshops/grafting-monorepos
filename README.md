@@ -94,7 +94,7 @@ git log --oneline [filename] | wc -l
 
 ### Report out
 
-Report your findings in comments section of the “Activity 1 - History” Issue
+Report your findings in comments section of the [Activity 1: History Issue](https://github.com/githubuniverseworkshops/grafting-monorepos/issues/1)
   - Include answers to the following questions in your comments:
     - How often was that file changed?
     - Do you find any pattern?
@@ -322,6 +322,12 @@ Writing reports to .git/filter-repo/analysis...done.
 </details>
 
 You can see the results of the analysis in the [`linux-filter-repo` folder](./linux-filter-repo)
+
+### Report out
+
+Report your findings from the above commands in comments section of the [Activity 2: Analysis](https://github.com/githubuniverseworkshops/grafting-monorepos/issues/2).  Be sure to include answers to the following questions in your comments, if possible:
+    - Do you find any patterns?
+    - Was there anything surprising? 
 
 ## :seedling: Activity 3: Graft a repository (20 minutes)
 
