@@ -137,7 +137,7 @@ gh repo clone githubuniverseworkshops/grafting-monorepos
 <details><summary>See the result of running <code>git-sizer</code></summary>
 
 ``` bash
-../git-sizer-1.3.0-darwin-amd64/git-sizer --verbose
+time ../git-sizer-1.3.0-darwin-amd64/git-sizer --verbose
 
 Processing blobs: 2173019                        
 Processing trees: 4613547                        
@@ -459,7 +459,7 @@ Processing references: 3
 <details><summary>Find lfs extensions on linux:</summary>
 
 ```bash
-» time ../grafting-monorepos/scripts/git-find-lfs-extensions                                 droidpl@Javiers-MacBook-Pro
+time ../grafting-monorepos/scripts/git-find-lfs-extensions
 
 Type           Extension                                          LShare    LCount     Count      Size       Min       Max
 -------        ---------                                         -------   -------   -------   -------   -------   -------
@@ -479,7 +479,7 @@ Add to .gitattributes:
 <details><summary>Find many dirs analysis on linux:</summary>
 
 ```bash
-» time ../grafting-monorepos/scripts/git-find-dirs-many-files | head -n 20                   droidpl@Javiers-MacBook-Pro
+time ../grafting-monorepos/scripts/git-find-dirs-many-files | head -n 20
    69309 .
    28688 ./drivers
    14720 ./arch
@@ -509,7 +509,7 @@ head -n 20  0.00s user 0.00s system 0% cpu 41.058 total
 <details><summary>Find dirs unwanted analysis on linux:</summary>
 
 ```bash
-../grafting-monorepos/scripts/git-find-dirs-unwanted | head -n 15                          droidpl@Javiers-MacBook-Pro
+time ../grafting-monorepos/scripts/git-find-dirs-unwanted | head -n 15
     4518 tools/
     4063 Documentation/devicetree/bindings/
     2059 tools/testing/selftests/
