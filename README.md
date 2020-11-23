@@ -36,6 +36,7 @@ git log --oneline --graph -- [filename]
 *Be sure you are in the location of that file inside your command line tool.*
 
 <details><summary>Sample results</summary>
+  
 ```bash
   * a7ddcea58ae2 Drop all 00-INDEX files from Documentation/
   * 4b290af0b3a4 Docs: Added a pointer to the formatted docs to README
