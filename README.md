@@ -26,67 +26,113 @@ Before joining the workshop, there are a few items that you will need to install
 
 We will take a look at some of the characteristics of your own repository in preparation of the analyzation phase.
 
-### History of a single file
+### History of your repository
 
-Let's look at the history of a single file within your repository.  Pick a file that has been around for a while. Using a command line tool, run the following command on it:  
+Let's look at the history of your repository.  Using a command line tool, run the following command on it:  
 ```
-git log --oneline --graph -- [filename]
+git log --oneline
 ```
 
 *Be sure you are in the location of that file inside your command line tool.*
 
 <details><summary>Sample results</summary>
-  
-```bash
-  * a7ddcea58ae2 Drop all 00-INDEX files from Documentation/
-  * 4b290af0b3a4 Docs: Added a pointer to the formatted docs to README
-  * 9f4a68e416a5 README: Improve documentation descriptions
-  * 6bef44b9b969 README: add a new README file, pointing to the Documentation/
-  * 9d85025b0418 docs-rst: create an users manual book
-  * 44b10006a97e README: convert it to ReST markup
-  * 35db7e94cdee README: Delete obsolete i386 info + update arch/i386/ paths
-  * cfaf790f932b README: remove trailing whitespace
-  * 3047bcc537cf README: cosmetic fixes
-  * ad29fff88976 README: Add ARC architecture
-  * 6609b638353c README: GTK+ is a acronym
-  * 1913c6f4488e README: Change gzip/bzip2 to xz compression format
-  * 49d86dc92c6e README: Update version number reference
-  *   3bd7bf1f0fe1 Merge branch 'master' into for-next
-  |\  
-  | * 80b810b276cf localmodconfig: Document localmodconfig in README
-  * | fc0d1b93fe7b README: document "make olddefconfig"
-  |/  
-  * 3773b4540721 README: Remove sporadic tabs
-  * 7f65e924c0cf README: Consolidate discussions of -stable patches
-  * c072c3f0e14f README: Capitalize start of sentence
-  * 88f7a642cf0d README: More consistent and readable white space
-  * 6d12760c9f3d README: `Alternately` -> `Alternatively`
-  * a6144bb9e7b4 README: Better comma usage
-  * a20e3a795b1a README: Grammar: `me has' -> `I have'
-  * 5b4285fbd469 README: Use `X' and `x' consistently
-  * 0466dcbeda72 Update version number references in README
-  * cddb5de05317 Readme: Add architecture
-  * b3235fe420ed README: cite nconfig
-  * b2d8993026a2 README: fix misleading pointer to the defconf directory
-  * 590a5857291e kconfig: add a note about the deps to the 'silentoldconfig' help
+
+```
+❯ git log --oneline
+
+  c2e7554e1b85 (HEAD -> master, origin/master, origin/HEAD) Merge tag 'gfs2-v5.10-rc4-fixes' of git://git.kernel.org/pub/scm/linux/kernel/git/gfs2/linux-gfs2
+  ce228d459424 Merge tag 'nfsd-5.10-2' of git://linux-nfs.org/~bfields/linux
+  f86fee1845ee Merge tag 'linux-kselftest-kunit-fixes-5.10-rc5' of git://git.kernel.org/pub/scm/linux/kernel/git/shuah/linux-kselftest
+  20b329129009 gfs2: Fix regression in freeze_go_sync
+  0fa8ee0d9ab9 Merge branch 'for-linus' of git://git.kernel.org/pub/scm/linux/kernel/git/dtor/input
+  111e91a6df50 Merge tag 's390-5.10-4' of git://git.kernel.org/pub/scm/linux/kernel/git/s390/linux
+  ed129cd75ac1 Merge tag 'mips_fixes_5.10_1' of git://git.kernel.org/pub/scm/linux/kernel/git/mips/linux
+  be1dd6692adb Merge tag 'perf-tools-fixes-for-v5.10-2020-11-17' of git://git.kernel.org/pub/scm/linux/kernel/git/acme/linux
+  9dacf44c3837 Merge branch 'urgent-fixes' of git://git.kernel.org/pub/scm/linux/kernel/git/paulmck/linux-rcu
+  ac3b57adf87a MIPS: Alchemy: Fix memleak in alchemy_clk_setup_cpu
+  61a2f1aecf60 MIPS: kernel: Fix for_each_memblock conversion
+  9c87c9f41245 Merge tag 'arm-soc-fixes-v5.10-2' of git://git.kernel.org/pub/scm/linux/kernel/git/soc/soc
+  a5698b3835f5 Merge tag 'hyperv-fixes-signed' of git://git.kernel.org/pub/scm/linux/kernel/git/hyperv/linux
+  a08f4523243c Merge tag 'for_linus' of git://git.kernel.org/pub/scm/linux/kernel/git/mst/vhost
+  568beb27959b perf test: Avoid an msan warning in a copied stack.
+  1c756cd429d8 perf inject: Fix file corruption due to event deletion
+  cc05af8e2e91 Merge tag 'imx-fixes-5.10-4' of git://git.kernel.org/pub/scm/linux/kernel/git/shawnguo/linux into arm/fixes
+  39c8d39c04bb Merge tag 'renesas-fixes-for-v5.10-tag1' of git://git.kernel.org/pub/scm/linux/kernel/git/geert/renesas-devel into arm/fixes
+  09162bc32c88 (tag: v5.10-rc4) Linux 5.10-rc4
+  efd838fec17b vhost scsi: Add support for LUN resets.
+  18f1becb6948 vhost scsi: add lun parser helper
+  47a3565e8bb1 vhost scsi: fix cmd completion race
+  25b98b64e284 vhost scsi: alloc cmds per vq instead of session
 ```
 
 </details>
   <br>  
 
-### How many times has the file changed?
+  ### Explore a commit
 
-Let's find out how many times that file has changed.  On the same file, run the following command to see how may commits have been made for that single file:  
-```bash
-git log --oneline [filename] | wc -l
+  Choose a commit in your repositories history and let's explore that single commit.  Run the following command to see the details of the commit.
+  ```
+  git log --pretty=fuller [commit hash]
+  ```
+  *Be sure you are in the location of that file inside your command line tool.*
+
+  <details><summary>Sample results</summary>
+
+  ```
+  ❯ git log --pretty=fuller efd838fec17b
+
+    commit efd838fec17bd8756da852a435800a7e6281bfbc
+    Author:     Mike Christie <michael.christie@oracle.com>
+    AuthorDate: Mon Nov 9 23:33:23 2020 -0600
+    Commit:     Michael S. Tsirkin <mst@redhat.com>
+    CommitDate: Sun Nov 15 17:30:55 2020 -0500
+
+    vhost scsi: Add support for LUN resets.
+
+    In newer versions of virtio-scsi we just reset the timer when an a
+    command times out, so TMFs are never sent for the cmd time out case.
+    However, in older kernels and for the TMF inject cases, we can still get
+    resets and we end up just failing immediately so the guest might see the
+    device get offlined and IO errors.
+
+    For the older kernel cases, we want the same end result as the
+    modern virtio-scsi driver where we let the lower levels fire their error
+    handling and handle the problem. And at the upper levels we want to
+    wait. This patch ties the LUN reset handling into the LIO TMF code which
+    will just wait for outstanding commands to complete like we are doing in
+    the modern virtio-scsi case.
+
+    Note: I did not handle the ABORT case to keep this simple. For ABORTs
+    LIO just waits on the cmd like how it does for the RESET case. If
+    an ABORT fails, the guest OS ends up escalating to LUN RESET, so in
+    the end we get the same behavior where we wait on the outstanding
+    cmds.
+
+    Signed-off-by: Mike Christie <michael.christie@oracle.com>
+    Link: https://lore.kernel.org/r/1604986403-4931-6-git-send-email-michael.christie@oracle.com
+    Signed-off-by: Michael S. Tsirkin <mst@redhat.com>
+    Acked-by: Stefan Hajnoczi <stefanha@redhat.com>
+  ```
+
+  </details>
+    <br>
+
+
+
+### How many changeset are in your repository
+
+Let's find out how many changes your repository has. Run the following command to see how may commits have been made in your repository:
+
 ```
-
+git log --oneline | wc -l
+```
+*Be sure you are in the location of that file inside your command line tool.*
 
 <details><summary>Sample results</summary>
 
-  ```bash
-  ❯ git log --oneline README | wc -l
-    46
+  ```
+  ❯ git log --oneline | wc -l
+    967467
   ```
 
 </details>
@@ -97,8 +143,8 @@ git log --oneline [filename] | wc -l
 
 Report your findings in comments section of the [Activity 1: History Issue](https://github.com/githubuniverseworkshops/grafting-monorepos/issues/1)
   - Include answers to the following questions in your comments:
-    - How often was that file changed?
-    - Do you find any pattern?
+    - How many commits have been made on your repository?
+    - Do you find any patterns?
     - Are the commit messages relevant enough to know why the file changed? Do you follow a standard?
 
 > :warning: Make sure during all this exercise you don't post any private information that should not be shared publicly.
@@ -328,7 +374,7 @@ You can see the results of the analysis in the [`linux-filter-repo` folder](./li
 
 Report your findings from the above commands in comments section of the [Activity 2: Analysis](https://github.com/githubuniverseworkshops/grafting-monorepos/issues/2).  Be sure to include answers to the following questions in your comments, if possible:
     - Do you find any patterns?
-    - Was there anything surprising? 
+    - Was there anything surprising?
 
 ## :seedling: Activity 3: Graft a repository (20 minutes)
 
