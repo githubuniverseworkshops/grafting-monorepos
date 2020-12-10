@@ -162,7 +162,7 @@ Before starting any analysis, **pick one repository of your preference** that yo
 
 > :warning: Make sure during all this exercise you don't post any private information that should not be shared publicly.
 
-Clone this repository as we have added all the tools into the it for making the workshop more convenient:
+Clone this repository as we have added all the tools into it for making the workshop more convenient:
 ```bash
 # Clone the repository
 git clone https://github.com/githubuniverseworkshops/grafting-monorepos.git
