@@ -844,7 +844,7 @@ closed
 
 </details>
 
-If your's doesn't come back the same, it could be that your machine is missing some root certificates as noted [here](https://docs.microsoft.com/en-us/troubleshoot/mem/configmgr/connectivity-issues-digicert-global-root-g2-not-installed).
+If yours doesn't come back the same, it could be that your machine is missing some root certificates as noted [here](https://docs.microsoft.com/en-us/troubleshoot/mem/configmgr/connectivity-issues-digicert-global-root-g2-not-installed).
 ```
 depth=2 C = IE, O = Baltimore, OU = CyberTrust, CN = Baltimore CyberTrust Root
 verify return:1
