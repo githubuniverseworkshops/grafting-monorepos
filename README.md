@@ -17,6 +17,7 @@ Before joining the workshop, there are a few items that you will need to install
 - A clone or fork of a repository you would like to reduce in size
 - Time it takes to clone the repository  
     `time git clone [url]`
+- Install [Git LFS](https://docs.github.com/en/free-pro-team@latest/github/managing-large-files/installing-git-large-file-storage)
 - Install [git-sizer](https://github.com/github/git-sizer/#getting-started)
 - Install [git-filter-repo](https://github.com/newren/git-filter-repo)
 - Clone the this [workshop repository](https://github.com/githubuniverseworkshops/grafting-monorepos)
@@ -162,7 +163,7 @@ Before starting any analysis, **pick one repository of your preference** that yo
 
 > :warning: Make sure during all this exercise you don't post any private information that should not be shared publicly.
 
-Clone this repository as we have added all the tools into the it for making the workshop more convenient:
+Clone this repository as we have added all the tools into it for making the workshop more convenient:
 ```bash
 # Clone the repository
 git clone https://github.com/githubuniverseworkshops/grafting-monorepos.git
