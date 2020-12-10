@@ -598,6 +598,267 @@ Writing reports to .git/filter-repo/analysis...done.
 
 Find the details in the [`linux-filter-repo-grafted` folder](./linux-filter-repo-grafted)
 
+## :warning: Troubleshooting
+
+### Windows Certificate Issues
+
+It seems that there may be some trouble with [Windows 10 not having the correct DigiCert](https://docs.microsoft.com/en-us/troubleshoot/mem/configmgr/connectivity-issues-digicert-global-root-g2-not-installed) intermediate certificate which could cause a clone of this repository to fail when retrieving the LFS portions of the repository.
+
+To diagnose this issue, try running the following:
+
+```bash
+openssl s_client -connect github.com:443 -showcerts
+openssl s_client -connect github-cloud.s3.amazonaws.com:443 -showcerts
+```
+
+You should get the following results:
+
+<details><summary> Open to see <code>openssl s_client -connect github.com:443 -showcerts</code> results</summary>
+
+```bash
+$ openssl s_client -connect github-cloud.s3.amazonaws.com:443 -showcerts
+CONNECTED(00000005)
+depth=2 C = IE, O = Baltimore, OU = CyberTrust, CN = Baltimore CyberTrust Root
+verify return:1
+depth=1 C = US, O = DigiCert Inc, OU = www.digicert.com, CN = DigiCert Baltimore CA-2 G2
+verify return:1
+depth=0 C = US, ST = Washington, L = Seattle, O = "Amazon.com, Inc.", CN = *.s3.amazonaws.com
+verify return:1
+---
+Certificate chain
+ 0 s:/C=US/ST=Washington/L=Seattle/O=Amazon.com, Inc./CN=*.s3.amazonaws.com
+   i:/C=US/O=DigiCert Inc/OU=www.digicert.com/CN=DigiCert Baltimore CA-2 G2
+-----BEGIN CERTIFICATE-----
+MIIG3DCCBcSgAwIBAgIQCC32junGkxW+v3IHmzgQ/TANBgkqhkiG9w0BAQsFADBk
+MQswCQYDVQQGEwJVUzEVMBMGA1UEChMMRGlnaUNlcnQgSW5jMRkwFwYDVQQLExB3
+d3cuZGlnaWNlcnQuY29tMSMwIQYDVQQDExpEaWdpQ2VydCBCYWx0aW1vcmUgQ0Et
+MiBHMjAeFw0xOTExMDkwMDAwMDBaFw0yMTAzMTIxMjAwMDBaMGwxCzAJBgNVBAYT
+AlVTMRMwEQYDVQQIEwpXYXNoaW5ndG9uMRAwDgYDVQQHEwdTZWF0dGxlMRkwFwYD
+VQQKExBBbWF6b24uY29tLCBJbmMuMRswGQYDVQQDDBIqLnMzLmFtYXpvbmF3cy5j
+b20wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDJW86RuSlYnitcFHiQ
+298DPDFqEaC10ttw23m1Y+20aHic+GM9iUD+r2XO7LavEoZ0LORnEF5jM6bjt4aH
+oXqZ6rB9fj6oMhtlQ8M7w72+WdM7aJ/6ZcqO3+NB+RB56pitqSQjukvSI88mjY6k
+Mk/Qg2ZEABA3a/DwMfVS1Mcznqaw/yt+t+r+e33/WFTAZ3A0jmyXMCTIVrcpWulv
+kza70D/oiF5Peiwlc8oey4x+A/QDfrmQHv/wu7sJegFj0hlQ96LqfjdHu48t6que
+2yE2S8Ae6+2QXMrvloR9jOKK0EarN5bxSOpU1HriwiNwO3/bGEYjSnL0xLkpTKv/
+eGHzAgMBAAGjggOAMIIDfDAfBgNVHSMEGDAWgBTAErIodGhGZ+lwJXQaAEVbBn1c
+RDAdBgNVHQ4EFgQU3fImAGS3yvdcppam16zL4ScVDBMwLwYDVR0RBCgwJoISKi5z
+My5hbWF6b25hd3MuY29tghBzMy5hbWF6b25hd3MuY29tMA4GA1UdDwEB/wQEAwIF
+oDAdBgNVHSUEFjAUBggrBgEFBQcDAQYIKwYBBQUHAwIwgYEGA1UdHwR6MHgwOqA4
+oDaGNGh0dHA6Ly9jcmwzLmRpZ2ljZXJ0LmNvbS9EaWdpQ2VydEJhbHRpbW9yZUNB
+LTJHMi5jcmwwOqA4oDaGNGh0dHA6Ly9jcmw0LmRpZ2ljZXJ0LmNvbS9EaWdpQ2Vy
+dEJhbHRpbW9yZUNBLTJHMi5jcmwwTAYDVR0gBEUwQzA3BglghkgBhv1sAQEwKjAo
+BggrBgEFBQcCARYcaHR0cHM6Ly93d3cuZGlnaWNlcnQuY29tL0NQUzAIBgZngQwB
+AgIweQYIKwYBBQUHAQEEbTBrMCQGCCsGAQUFBzABhhhodHRwOi8vb2NzcC5kaWdp
+Y2VydC5jb20wQwYIKwYBBQUHMAKGN2h0dHA6Ly9jYWNlcnRzLmRpZ2ljZXJ0LmNv
+bS9EaWdpQ2VydEJhbHRpbW9yZUNBLTJHMi5jcnQwDAYDVR0TAQH/BAIwADCCAX0G
+CisGAQQB1nkCBAIEggFtBIIBaQFnAHYApLkJkLQYWBSHuxOizGdwCjw1mAT5G9+4
+43fNDsgN3BAAAAFuTXY7MAAABAMARzBFAiEAifHUKVkZIWkFHtFhj/67xabxyzSu
+d6PCFBt38GXC6XkCIDMPF2N2mKzbst5SXda23BFBufDKzr65+2FfwBi/kAbuAHYA
+RJRlLrDuzq/EQAfYqP4owNrmgr7YyzG1P9MzlrW2gagAAAFuTXY7KAAABAMARzBF
+AiEArv1CKeorl1PX81umtl6pGG1EHBMmMutjOBoqy/uRtDcCIEKX1COA9LAdsGba
+c+OaQuDJ6NgVI21BJvp1+tp2nkMLAHUAu9nfvB+KcbWTlCOXqpJ7RzhXlQqrUuga
+kJZkNo4e0YUAAAFuTXY7NQAABAMARjBEAiAbg6xfQS9eHRVZuZJWoA+B8ppvSsIj
+wmuCOOsVEGZEagIgQcPbXr7jb+KbF7vZGOUNsRUwOU+BFrIVFmRFZ1i4S7EwDQYJ
+KoZIhvcNAQELBQADggEBAAyJqLR4IsJWivGmNp4NrBQyQJCHDeHkhCrINnG+kwKl
+8Z+YtkNT37eghIQtnpu1Pf8TZXAB19hW/Pqc9hHUTflDocABgr3NQAQky3nIa6xG
+P6x2yyYoBTxOBsLXD2Hfb9uy5MOZCWnJxi+OjlE4SyterDtrODalRruhsZLFclcf
+68pfpR0+jrIDM4px3FRjrdIdf2wV2iT/gxRmeDCiO4kE3ClbzwDt3oPJxGZfzrKI
+/jBUKommu5hnhLgdvOA8dXuaGLOT98kd8jgvNr7xwB/FIvAPyEoZMzgI6R5AICXd
+S+ZudBk1TeOZGidtNVBrxg93SBwwGsP/Wgva0PQtmmM=
+-----END CERTIFICATE-----
+ 1 s:/C=US/O=DigiCert Inc/OU=www.digicert.com/CN=DigiCert Baltimore CA-2 G2
+   i:/C=IE/O=Baltimore/OU=CyberTrust/CN=Baltimore CyberTrust Root
+-----BEGIN CERTIFICATE-----
+MIIEYzCCA0ugAwIBAgIQAYL4CY6i5ia5GjsnhB+5rzANBgkqhkiG9w0BAQsFADBa
+MQswCQYDVQQGEwJJRTESMBAGA1UEChMJQmFsdGltb3JlMRMwEQYDVQQLEwpDeWJl
+clRydXN0MSIwIAYDVQQDExlCYWx0aW1vcmUgQ3liZXJUcnVzdCBSb290MB4XDTE1
+MTIwODEyMDUwN1oXDTI1MDUxMDEyMDAwMFowZDELMAkGA1UEBhMCVVMxFTATBgNV
+BAoTDERpZ2lDZXJ0IEluYzEZMBcGA1UECxMQd3d3LmRpZ2ljZXJ0LmNvbTEjMCEG
+A1UEAxMaRGlnaUNlcnQgQmFsdGltb3JlIENBLTIgRzIwggEiMA0GCSqGSIb3DQEB
+AQUAA4IBDwAwggEKAoIBAQC75wD+AAFz75uI8FwIdfBccHMf/7V6H40II/3HwRM/
+sSEGvU3M2y24hxkx3tprDcFd0lHVsF5y1PBm1ITykRhBtQkmsgOWBGmVU/oHTz6+
+hjpDK7JZtavRuvRZQHJaZ7bN5lX8CSukmLK/zKkf1L+Hj4Il/UWAqeydjPl0kM8c
++GVQr834RavIL42ONh3e6onNslLZ5QnNNnEr2sbQm8b2pFtbObYfAB8ZpPvTvgzm
++4/dDoDmpOdaxMAvcu6R84Nnyc3KzkqwIIH95HKvCRjnT0LsTSdCTQeg3dUNdfc2
+YMwmVJihiDfwg/etKVkgz7sl4dWe5vOuwQHrtQaJ4gqPAgMBAAGjggEZMIIBFTAd
+BgNVHQ4EFgQUwBKyKHRoRmfpcCV0GgBFWwZ9XEQwHwYDVR0jBBgwFoAU5Z1ZMIJH
+WMys+ghUNoZ7OrUETfAwEgYDVR0TAQH/BAgwBgEB/wIBADAOBgNVHQ8BAf8EBAMC
+AYYwNAYIKwYBBQUHAQEEKDAmMCQGCCsGAQUFBzABhhhodHRwOi8vb2NzcC5kaWdp
+Y2VydC5jb20wOgYDVR0fBDMwMTAvoC2gK4YpaHR0cDovL2NybDMuZGlnaWNlcnQu
+Y29tL09tbmlyb290MjAyNS5jcmwwPQYDVR0gBDYwNDAyBgRVHSAAMCowKAYIKwYB
+BQUHAgEWHGh0dHBzOi8vd3d3LmRpZ2ljZXJ0LmNvbS9DUFMwDQYJKoZIhvcNAQEL
+BQADggEBAC/iN2bDGs+RVe4pFPpQEL6ZjeIo8XQWB2k7RDA99blJ9Wg2/rcwjang
+B0lCY0ZStWnGm0nyGg9Xxva3vqt1jQ2iqzPkYoVDVKtjlAyjU6DqHeSmpqyVDmV4
+7DOMvpQ+2HCr6sfheM4zlbv7LFjgikCmbUHY2Nmz+S8CxRtwa+I6hXsdGLDRS5rB
+bxcQKegOw+FUllSlkZUIII1pLJ4vP1C0LuVXH6+kc9KhJLsNkP5FEx2noSnYZgvD
+0WyzT7QrhExHkOyL4kGJE7YHRndC/bseF/r/JUuOUFfrjsxOFT+xJd1BDKCcYm1v
+upcHi9nzBhDFKdT3uhaQqNBU4UtJx5g=
+-----END CERTIFICATE-----
+---
+Server certificate
+subject=/C=US/ST=Washington/L=Seattle/O=Amazon.com, Inc./CN=*.s3.amazonaws.com
+issuer=/C=US/O=DigiCert Inc/OU=www.digicert.com/CN=DigiCert Baltimore CA-2 G2
+---
+No client certificate CA names sent
+Server Temp Key: ECDH, P-256, 256 bits
+---
+SSL handshake has read 3395 bytes and written 322 bytes
+---
+New, TLSv1/SSLv3, Cipher is ECDHE-RSA-AES128-GCM-SHA256
+Server public key is 2048 bit
+Secure Renegotiation IS supported
+Compression: NONE
+Expansion: NONE
+No ALPN negotiated
+SSL-Session:
+    Protocol  : TLSv1.2
+    Cipher    : ECDHE-RSA-AES128-GCM-SHA256
+    Session-ID: 83B0540EA3E3401D39A74A25FC24B428E3A418E0B1A9EEB26D02355F3FEA33B6
+    Session-ID-ctx:
+    Master-Key: E4509EC796A88A0E54849D82B0D0D98ECC32FCFEED4298CC782055FDD23EB502C9D05AC75CE3E88E1D68BEE4489D8FD7
+    Start Time: 1607618046
+    Timeout   : 7200 (sec)
+    Verify return code: 0 (ok)
+---
+closed
+```
+
+</details>
+
+and
+
+<details><summary> Open to see <code>openssl s_client -connect github-cloud.s3.amazonaws.com:443 -showcerts</code> results</summar>
+
+
+```bash
+$ openssl s_client -connect github.com:443 -showcerts
+CONNECTED(00000005)
+depth=2 C = US, O = DigiCert Inc, OU = www.digicert.com, CN = DigiCert High Assurance EV Root CA
+verify return:1
+depth=1 C = US, O = DigiCert Inc, OU = www.digicert.com, CN = DigiCert SHA2 High Assurance Server CA
+verify return:1
+depth=0 C = US, ST = California, L = San Francisco, O = "GitHub, Inc.", CN = github.com
+verify return:1
+---
+Certificate chain
+ 0 s:/C=US/ST=California/L=San Francisco/O=GitHub, Inc./CN=github.com
+   i:/C=US/O=DigiCert Inc/OU=www.digicert.com/CN=DigiCert SHA2 High Assurance Server CA
+-----BEGIN CERTIFICATE-----
+MIIG1TCCBb2gAwIBAgIQBVfICygmg6F7ChFEkylreTANBgkqhkiG9w0BAQsFADBw
+MQswCQYDVQQGEwJVUzEVMBMGA1UEChMMRGlnaUNlcnQgSW5jMRkwFwYDVQQLExB3
+d3cuZGlnaWNlcnQuY29tMS8wLQYDVQQDEyZEaWdpQ2VydCBTSEEyIEhpZ2ggQXNz
+dXJhbmNlIFNlcnZlciBDQTAeFw0yMDA1MDUwMDAwMDBaFw0yMjA1MTAxMjAwMDBa
+MGYxCzAJBgNVBAYTAlVTMRMwEQYDVQQIEwpDYWxpZm9ybmlhMRYwFAYDVQQHEw1T
+YW4gRnJhbmNpc2NvMRUwEwYDVQQKEwxHaXRIdWIsIEluYy4xEzARBgNVBAMTCmdp
+dGh1Yi5jb20wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQC7MrTQ2J6a
+nox5KUwrqO9cQ9STO5R4/zBUxxvI5S8bmc0QjWfIVAwHWuT0Bn/H1oS0LM0tTkQm
+ARrqN77v9McVB8MWTGsmGQnS/1kQRFuKiYGUHf7iX5pfijbYsOkfb4AiVKysKUNV
+UtgVvpJoe5RWURjQp9XDWkeo2DzGHXLcBDadrM8VLC6H1/D9SXdVruxKqduLKR41
+Z/6dlSDdeY1gCnhz3Ch1pYbfMfsTCTamw+AtRtwlK3b2rfTHffhowjuzM15UKt+b
+rr/cEBlAjQTva8rutYU9K9ONgl+pG2u7Bv516DwmNy8xz9wOjTeOpeh0M9N/ewq8
+cgbR87LFaxi1AgMBAAGjggNzMIIDbzAfBgNVHSMEGDAWgBRRaP+QrwIHdTzM2WVk
+YqISuFlyOzAdBgNVHQ4EFgQUYwLSXQJf943VWhKedhE2loYsikgwJQYDVR0RBB4w
+HIIKZ2l0aHViLmNvbYIOd3d3LmdpdGh1Yi5jb20wDgYDVR0PAQH/BAQDAgWgMB0G
+A1UdJQQWMBQGCCsGAQUFBwMBBggrBgEFBQcDAjB1BgNVHR8EbjBsMDSgMqAwhi5o
+dHRwOi8vY3JsMy5kaWdpY2VydC5jb20vc2hhMi1oYS1zZXJ2ZXItZzYuY3JsMDSg
+MqAwhi5odHRwOi8vY3JsNC5kaWdpY2VydC5jb20vc2hhMi1oYS1zZXJ2ZXItZzYu
+Y3JsMEwGA1UdIARFMEMwNwYJYIZIAYb9bAEBMCowKAYIKwYBBQUHAgEWHGh0dHBz
+Oi8vd3d3LmRpZ2ljZXJ0LmNvbS9DUFMwCAYGZ4EMAQICMIGDBggrBgEFBQcBAQR3
+MHUwJAYIKwYBBQUHMAGGGGh0dHA6Ly9vY3NwLmRpZ2ljZXJ0LmNvbTBNBggrBgEF
+BQcwAoZBaHR0cDovL2NhY2VydHMuZGlnaWNlcnQuY29tL0RpZ2lDZXJ0U0hBMkhp
+Z2hBc3N1cmFuY2VTZXJ2ZXJDQS5jcnQwDAYDVR0TAQH/BAIwADCCAXwGCisGAQQB
+1nkCBAIEggFsBIIBaAFmAHUAKXm+8J45OSHwVnOfY6V35b5XfZxgCvj5TV0mXCVd
+x4QAAAFx5ltprwAABAMARjBEAiAuWGCWxN/M0Ms3KOsqFjDMHT8Aq0SlHfQ68KDg
+rVU6AAIgDA+2EB0D5W5r0i4Nhljx6ABlIByzrEdfcxiOD/o6//EAdQAiRUUHWVUk
+VpY/oS/x922G4CMmY63AS39dxoNcbuIPAgAAAXHmW2nTAAAEAwBGMEQCIBp+XQKa
+UDiPHwjBxdv5qvgyALKaysKqMF60gqem8iPRAiAk9Dp5+VBUXfSHqyW+tVShUigh
+ndopccf8Gs21KJ4jXgB2AFGjsPX9AXmcVm24N3iPDKR6zBsny/eeiEKaDf7UiwXl
+AAABceZbahsAAAQDAEcwRQIgd/5HcxT4wfNV8zavwxjYkw2TYBAuRCcqp1SjWKFn
+4EoCIQDHSTHxnbpxWFbP6v5Y6nGFZCDjaHgd9HrzUv2J/DaacDANBgkqhkiG9w0B
+AQsFAAOCAQEAhjKPnBW4r+jR3gg6RA5xICTW/A5YMcyqtK0c1QzFr8S7/l+skGpC
+yCHrJfFrLDeyKqgabvLRT6YvvM862MGfMMDsk+sKWtzLbDIcYG7sbviGpU+gtG1q
+B0ohWNApfWWKyNpquqvwdSEzAEBvhcUT5idzbK7q45bQU9vBIWgQz+PYULAU7KmY
+z7jOYV09o22TNMQT+hFmo92+EBlwSeIETYEsHy5ZxixTRTvu9hP00CyEbiht5OTK
+5EiJG6vsIh/uEtRsdenMCxV06W2f20Af4iSFo0uk6c1ryHefh08FcwA4pSNUaPyi
+Pb8YGQ6o/blejFzo/OSiUnDueafSJ0p6SQ==
+-----END CERTIFICATE-----
+ 1 s:/C=US/O=DigiCert Inc/OU=www.digicert.com/CN=DigiCert SHA2 High Assurance Server CA
+   i:/C=US/O=DigiCert Inc/OU=www.digicert.com/CN=DigiCert High Assurance EV Root CA
+-----BEGIN CERTIFICATE-----
+MIIEsTCCA5mgAwIBAgIQBOHnpNxc8vNtwCtCuF0VnzANBgkqhkiG9w0BAQsFADBs
+MQswCQYDVQQGEwJVUzEVMBMGA1UEChMMRGlnaUNlcnQgSW5jMRkwFwYDVQQLExB3
+d3cuZGlnaWNlcnQuY29tMSswKQYDVQQDEyJEaWdpQ2VydCBIaWdoIEFzc3VyYW5j
+ZSBFViBSb290IENBMB4XDTEzMTAyMjEyMDAwMFoXDTI4MTAyMjEyMDAwMFowcDEL
+MAkGA1UEBhMCVVMxFTATBgNVBAoTDERpZ2lDZXJ0IEluYzEZMBcGA1UECxMQd3d3
+LmRpZ2ljZXJ0LmNvbTEvMC0GA1UEAxMmRGlnaUNlcnQgU0hBMiBIaWdoIEFzc3Vy
+YW5jZSBTZXJ2ZXIgQ0EwggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQC2
+4C/CJAbIbQRf1+8KZAayfSImZRauQkCbztyfn3YHPsMwVYcZuU+UDlqUH1VWtMIC
+Kq/QmO4LQNfE0DtyyBSe75CxEamu0si4QzrZCwvV1ZX1QK/IHe1NnF9Xt4ZQaJn1
+itrSxwUfqJfJ3KSxgoQtxq2lnMcZgqaFD15EWCo3j/018QsIJzJa9buLnqS9UdAn
+4t07QjOjBSjEuyjMmqwrIw14xnvmXnG3Sj4I+4G3FhahnSMSTeXXkgisdaScus0X
+sh5ENWV/UyU50RwKmmMbGZJ0aAo3wsJSSMs5WqK24V3B3aAguCGikyZvFEohQcft
+bZvySC/zA/WiaJJTL17jAgMBAAGjggFJMIIBRTASBgNVHRMBAf8ECDAGAQH/AgEA
+MA4GA1UdDwEB/wQEAwIBhjAdBgNVHSUEFjAUBggrBgEFBQcDAQYIKwYBBQUHAwIw
+NAYIKwYBBQUHAQEEKDAmMCQGCCsGAQUFBzABhhhodHRwOi8vb2NzcC5kaWdpY2Vy
+dC5jb20wSwYDVR0fBEQwQjBAoD6gPIY6aHR0cDovL2NybDQuZGlnaWNlcnQuY29t
+L0RpZ2lDZXJ0SGlnaEFzc3VyYW5jZUVWUm9vdENBLmNybDA9BgNVHSAENjA0MDIG
+BFUdIAAwKjAoBggrBgEFBQcCARYcaHR0cHM6Ly93d3cuZGlnaWNlcnQuY29tL0NQ
+UzAdBgNVHQ4EFgQUUWj/kK8CB3U8zNllZGKiErhZcjswHwYDVR0jBBgwFoAUsT7D
+aQP4v0cB1JgmGggC72NkK8MwDQYJKoZIhvcNAQELBQADggEBABiKlYkD5m3fXPwd
+aOpKj4PWUS+Na0QWnqxj9dJubISZi6qBcYRb7TROsLd5kinMLYBq8I4g4Xmk/gNH
+E+r1hspZcX30BJZr01lYPf7TMSVcGDiEo+afgv2MW5gxTs14nhr9hctJqvIni5ly
+/D6q1UEL2tU2ob8cbkdJf17ZSHwD2f2LSaCYJkJA69aSEaRkCldUxPUd1gJea6zu
+xICaEnL6VpPX/78whQYwvwt/Tv9XBZ0k7YXDK/umdaisLRbvfXknsuvCnQsH6qqF
+0wGjIChBWUMo0oHjqvbsezt3tkBigAVBRQHvFwY+3sAzm2fTYS5yh+Rp/BIAV0Ae
+cPUeybQ=
+-----END CERTIFICATE-----
+---
+Server certificate
+subject=/C=US/ST=California/L=San Francisco/O=GitHub, Inc./CN=github.com
+issuer=/C=US/O=DigiCert Inc/OU=www.digicert.com/CN=DigiCert SHA2 High Assurance Server CA
+---
+No client certificate CA names sent
+Server Temp Key: ECDH, X25519, 253 bits
+---
+SSL handshake has read 3435 bytes and written 289 bytes
+---
+New, TLSv1/SSLv3, Cipher is ECDHE-RSA-AES128-GCM-SHA256
+Server public key is 2048 bit
+Secure Renegotiation IS supported
+Compression: NONE
+Expansion: NONE
+No ALPN negotiated
+SSL-Session:
+    Protocol  : TLSv1.2
+    Cipher    : ECDHE-RSA-AES128-GCM-SHA256
+    Session-ID: D3DEBDE2E2556A8B3A2FD17184081ED53F41F1BA252B8CA808320D4BF4D03CF8
+    Session-ID-ctx:
+    Master-Key: 1057E58DD379B7E4B0BDF73F8995EDB32E16DC80338F0829134EF918862FCEF192A08F205D9877DC9B1B818A3C0A0A33
+    Start Time: 1607618103
+    Timeout   : 7200 (sec)
+    Verify return code: 0 (ok)
+---
+closed
+```
+
+</details>
+
+If your's doesn't come back the same, it could be that your machine is missing some root certificates as noted [here](https://docs.microsoft.com/en-us/troubleshoot/mem/configmgr/connectivity-issues-digicert-global-root-g2-not-installed).
+```
+depth=2 C = IE, O = Baltimore, OU = CyberTrust, CN = Baltimore CyberTrust Root
+verify return:1
+depth=1 C = US, O = DigiCert Inc, OU = www.digicert.com, CN = DigiCert Baltimore CA-2 G2
+```
+
+There are a couple of things that you can do (at your own risk):
+
+1. Add the missing certs following the steps [here](https://www.hyperpac.de/?p=2359)
+
+1. Work around the missing certs by:
+    `git clone -c http.sslverify=false https://github.com/githubuniverseworkshops/grafting-monorepos.git`
+   - A note here though, what it will do is ignore any SSL verifications your network/machine may have set up for **ONLY** this repository.
+
 ## :books: Resources
 
 - Linux Kernel open source repository - [https://github.com/torvalds/linux](https://github.com/torvalds/linux)
