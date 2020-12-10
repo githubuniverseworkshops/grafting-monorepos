@@ -728,7 +728,7 @@ closed
 
 and
 
-<details><summary> Open to see <code>openssl s_client -connect github-cloud.s3.amazonaws.com:443 -showcerts</code> results</summar>
+<details><summary> Open to see <code>openssl s_client -connect github-cloud.s3.amazonaws.com:443 -showcerts</code> results</summary>
 
 
 ```bash
